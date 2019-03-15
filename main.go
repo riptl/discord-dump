@@ -38,6 +38,7 @@ var app = cobra.Command {
 
 var cmdGuild = cobra.Command {
 	Use: "guild <guild_id>",
+	Short: "Dump a Guild",
 	Args: cobra.ExactArgs(1),
 	Run: dumpGuild,
 }
