@@ -72,15 +72,15 @@ func dumpChannel(guild *discordgo.Guild, c *discordgo.Channel) {
 		}
 
 		for _, msg := range msgs {
-			mini := miniMsg {
-				ID: msg.ID,
-				Content: msg.Content,
+			mini := miniMsg{
+				ID:        msg.ID,
+				Content:   msg.Content,
 				Timestamp: msg.Timestamp,
-				Type: msg.Type,
-				Author: miniUser {
-					ID: msg.Author.ID,
+				Type:      msg.Type,
+				Author: miniUser{
+					ID:       msg.Author.ID,
 					Username: msg.Author.Username,
-					Bot: msg.Author.Bot,
+					Bot:      msg.Author.Bot,
 				},
 			}
 			err := jwr.Encode(mini)
@@ -91,7 +91,7 @@ func dumpChannel(guild *discordgo.Guild, c *discordgo.Channel) {
 
 		total += int64(len(msgs))
 
-		log.Printf("Dumping #%s (%s): Got page %03d, Total: % 8d", c.Name, c.ID, i, total)
+		log.Printf("Dumping #%s: Got page %03d, Total: % 8d", c.Name, i, total)
 
 		beforeID = msgs[len(msgs)-1].ID
 	}
