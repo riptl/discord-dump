@@ -40,11 +40,11 @@ func dumpChannel(guild *discordgo.Guild, c *discordgo.Channel) {
 
 	firstMsg, err := session.ChannelMessages(c.ID, 1, "", "", "")
 	if err != nil {
-		fmt.Printf("Failed to access #%s (%s): %s", c.Name, c.ID, err)
+		log.Printf("Failed to access #%s (%s): %s", c.Name, c.ID, err)
 		return
 	}
 	if len(firstMsg) == 0 {
-		fmt.Printf("Failed to access #%s (%s): Channel is empty", c.Name, c.ID)
+		log.Printf("Failed to access #%s (%s): Channel is empty", c.Name, c.ID)
 		return
 	}
 
@@ -63,7 +63,7 @@ func dumpChannel(guild *discordgo.Guild, c *discordgo.Channel) {
 	for i := 1; true; i++ {
 		msgs, err := session.ChannelMessages(c.ID, 100, beforeID, "", "")
 		if err != nil {
-			fmt.Printf("Failed to dump #%s (%s): %s", c.Name, c.ID, err)
+			log.Printf("Failed to dump #%s (%s): %s", c.Name, c.ID, err)
 			return
 		}
 
