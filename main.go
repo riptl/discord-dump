@@ -13,7 +13,7 @@ var session *discordgo.Session
 
 var app = cobra.Command{
 	Use:     "discord-dump",
-	Version: "1.0.0",
+	Version: "1.1.0",
 }
 
 var cmdDump = cobra.Command{
