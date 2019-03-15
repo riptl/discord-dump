@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/bwmarrin/discordgo"
 	"github.com/spf13/cobra"
+	"log"
 	"os"
 )
 
@@ -49,6 +50,8 @@ var cmdGuild = cobra.Command{
 }
 
 func main() {
+	log.SetOutput(os.Stdout)
+
 	//app.AddCommand(&cmdChannel)
 	app.AddCommand(&cmdDump)
 	cmdDump.AddCommand(&cmdGuild)
