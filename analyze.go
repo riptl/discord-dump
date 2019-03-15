@@ -15,6 +15,8 @@ var cmdAnalyze = cobra.Command{
 	Short: "Analyze dumps",
 }
 
+var analysisProgress bool
+
 var cmdUserFrequency = cobra.Command{
 	Use:   "user-frequency <file>",
 	Short: "Messages per user",
@@ -31,9 +33,14 @@ var cmdBotRatio = cobra.Command{
 	Use:   "bot-ratio <file>",
 	Short: "Human/bot ratio",
 	Args:  cobra.ExactArgs(1),
-	Run: func(_ *cobra.Command, args []string) {
+	Run: func(c *cobra.Command, args []string) {
 		runAnalysis(new(analyisBotRatio), args[0])
 	},
+}
+
+func init() {
+	pf := cmdAnalyze.PersistentFlags()
+	pf.BoolVar(&analysisProgress, "progress", false, "Print progress while scanning")
 }
 
 func runAnalysis(a analysis, fpath string) {
@@ -48,11 +55,12 @@ func runAnalysis(a analysis, fpath string) {
 		var msg miniMsg
 		err = json.Unmarshal(line, &msg)
 		if err != nil {
-			panic(err)
+			fmt.Printf("Error: %s", err)
+			break
 		}
 		a.Add(&msg)
 
-		if i%1000 == 0 {
+		if analysisProgress && i%1000 == 0 {
 			short := a.Short()
 			if short != "" {
 				fmt.Printf("Scanning (%5d): %s\n", i, a.Short())
